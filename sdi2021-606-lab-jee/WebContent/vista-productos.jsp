@@ -20,9 +20,10 @@
 	<div class="container" id="contenedor-principal">
 		<h2>Vista-Productos</h2>
 		<ul>
-			<c:forEach var="par" items="${paresCarrito}">
+			<c:forEach var="par" items="${productosTienda}">
 				<tr>
-					<li>${par.key}- ${par.value}</li>
+					<li>${par.nombre} - ${par.precio}</li>
+					<img src="<c:out	value="${par.imagen}"/>" />
 				</tr>
 			</c:forEach>
 		</ul>
