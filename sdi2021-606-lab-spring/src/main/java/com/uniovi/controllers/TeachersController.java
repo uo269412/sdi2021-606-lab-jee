@@ -29,8 +29,6 @@ public class TeachersController {
 
 	@RequestMapping(value = "/teacher/add", method = RequestMethod.POST)
 	public String setTeacher(@ModelAttribute Teacher teacher) {
-		System.out.println("holaa");
-		System.out.println(teacher.toString());
 		teachersService.addTeacher(teacher);
 		return "redirect:/teacher/list";
 	}
