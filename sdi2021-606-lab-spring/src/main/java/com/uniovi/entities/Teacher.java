@@ -8,7 +8,7 @@ import javax.persistence.Id;
 public class Teacher {
 	@Id
 	@GeneratedValue
-	private Long dni;
+	private Long id;
 	private String nombre;
 	private String apellidos;
 	private String categoria;
@@ -17,20 +17,20 @@ public class Teacher {
 
 	}
 
-	public Teacher(Long dNI, String nombre, String apellidos, String categoria) {
+	public Teacher(Long id, String nombre, String apellidos, String categoria) {
 		super();
-		dni = dNI;
+		this.id = id;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.categoria = categoria;
 	}
 
-	public Long getDNI() {
-		return dni;
+	public Long getId() {
+		return id;
 	}
 
-	public void setDNI(Long dNI) {
-		dni = dNI;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNombre() {
@@ -59,7 +59,7 @@ public class Teacher {
 
 	@Override
 	public String toString() {
-		return "Teacher [DNI=" + dni + ", nombre=" + nombre + ", apellidos=" + apellidos + ", categoria=" + categoria
+		return "Teacher [DNI=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", categoria=" + categoria
 				+ "]";
 	}
 
