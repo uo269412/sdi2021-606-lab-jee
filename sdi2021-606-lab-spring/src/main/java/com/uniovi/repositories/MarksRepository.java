@@ -17,6 +17,7 @@ public interface MarksRepository extends CrudRepository<Mark, Long> {
 	@Query("UPDATE Mark SET resend = ?1 WHERE id = ?2")
 	void updateResend(Boolean resend, Long id);
 	
+	//new query
 	@Query("SELECT r FROM Mark r WHERE r.user = ?1 ORDER BY r.id ASC ")
 	List<Mark> findAllByUser(User user);
 }
