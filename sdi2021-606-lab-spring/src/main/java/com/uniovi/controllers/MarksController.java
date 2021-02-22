@@ -1,11 +1,12 @@
 package com.uniovi.controllers;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.security.Principal;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.uniovi.entities.Mark;
+import com.uniovi.entities.User;
 import com.uniovi.services.MarksService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.AddMarkValidator;
@@ -47,14 +49,31 @@ public class MarksController {
 //		return marksService.getMarks().toString();
 //	}
 
+//	@RequestMapping("/mark/list")
+//	public String getList(Model model) {
+////		Set<Mark> consultedList = (Set<Mark>) httpSession.getAttribute("consultedList");
+////		if (consultedList == null) {
+////			consultedList = new HashSet<Mark>();
+////		}
+////		model.addAttribute("consultedList", consultedList);
+//		model.addAttribute("markList", marksService.getMarks());
+//		return "mark/list";
+//	}
+
+//	@RequestMapping("/mark/list")
+//	public String getList(Model model, Principal principal) {
+//		String dni = principal.getName(); // DNI es el name de la autenticación
+//		User user = usersService.getUserByDni(dni);
+//		model.addAttribute("markList", marksService.getMarksForUser(user));
+//		return "mark/list";
+//	}
+
 	@RequestMapping("/mark/list")
 	public String getList(Model model) {
-//		Set<Mark> consultedList = (Set<Mark>) httpSession.getAttribute("consultedList");
-//		if (consultedList == null) {
-//			consultedList = new HashSet<Mark>();
-//		}
-//		model.addAttribute("consultedList", consultedList);
-		model.addAttribute("markList", marksService.getMarks());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String dni = auth.getName();
+		User user = usersService.getUserByDni(dni);
+		model.addAttribute("markList", marksService.getMarksForUser(user));
 		return "mark/list";
 	}
 
@@ -218,9 +237,17 @@ public class MarksController {
 
 	// LAB 03
 
+//	@RequestMapping("/mark/list/update")
+//	public String updateList(Model model) {
+//		model.addAttribute("markList", marksService.getMarks());
+//		return "mark/list :: tableMarks";
+//	}
+
 	@RequestMapping("/mark/list/update")
-	public String updateList(Model model) {
-		model.addAttribute("markList", marksService.getMarks());
+	public String updateList(Model model, Principal principal) {
+		String dni = principal.getName();
+		User user = usersService.getUserByDni(dni);
+		model.addAttribute("markList", marksService.getMarksForUser(user));
 		return "mark/list :: tableMarks";
 	}
 
