@@ -5,8 +5,6 @@ import java.security.Principal;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.Mark;
 import com.uniovi.entities.User;
@@ -69,11 +68,15 @@ public class MarksController {
 //	}
 
 	@RequestMapping("/mark/list")
-	public String getList(Model model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String dni = auth.getName();
+	public String getList(Model model, Principal principal,
+			@RequestParam(value = "", required = false) String searchText) {
+		String dni = principal.getName();
 		User user = usersService.getUserByDni(dni);
-		model.addAttribute("markList", marksService.getMarksForUser(user));
+		if (searchText != null && !searchText.isEmpty()) {
+			model.addAttribute("markList", marksService.searchMarksByDescriptionAndNameForUser(searchText, user));
+		} else {
+			model.addAttribute("markList", marksService.getMarksForUser(user));
+		}
 		return "mark/list";
 	}
 
