@@ -9,18 +9,18 @@
 
 
 	<div class="container">
-		<h2>Detalles de la nota</h2>
+		<h2 th:text="#{details.note}" >Detalles de la nota</h2>
 		<div class="panel panel-default">
 			<div class="panel-heading">DNI</div>
 			<div class="panel-body" th:text="${mark.user.dni}">28276</div>
 		</div>
 		<div class="panel panel-default">
-			<div class="panel-heading">Descripción</div>
+			<div class="panel-heading" th:text="#{description.message}">Descripción</div>
 			<div class="panel-body" th:text="${mark.description}">
 				UO11111@uniovi.es</div>
 		</div>
 		<div class="panel panel-default">
-			<div class="panel-heading">Puntuación</div>
+			<div class="panel-heading" th:text="#{points.message}">Puntuación</div>
 			<div class="panel-body" th:text="${mark.score}">100</div>
 		</div>
 	</div>
