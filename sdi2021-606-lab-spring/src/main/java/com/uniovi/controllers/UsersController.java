@@ -16,7 +16,7 @@ import com.uniovi.entities.Mark;
 import com.uniovi.entities.User;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
-import com.uniovi.validators.SignUpFormValidator;
+import com.uniovi.validators.AddTeacherValidator;
 
 @Controller
 public class UsersController {
@@ -27,7 +27,7 @@ public class UsersController {
 	private SecurityService securityService;
 
 	@Autowired
-	private SignUpFormValidator signUpFormValidator;
+	private AddTeacherValidator signUpFormValidator;
 
 	@RequestMapping("/user/list")
 	public String getListado(Model model) {

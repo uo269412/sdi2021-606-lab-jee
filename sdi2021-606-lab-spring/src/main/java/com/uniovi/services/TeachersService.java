@@ -26,6 +26,11 @@ public class TeachersService {
 	public Teacher getTeacher(Long id) {
 		return teachersRepository.findById(id).get();
 	}
+	
+	public Teacher getTeacher(String dni) {
+		return teachersRepository.findByDni(dni);
+	}
+
 
 	public void addTeacher(Teacher teacher) {
 		teachersRepository.save(teacher);

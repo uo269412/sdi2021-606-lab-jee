@@ -12,6 +12,7 @@ public class Teacher {
 	private String nombre;
 	private String apellidos;
 	private String categoria;
+	private String dni;
 
 	public Teacher() {
 
@@ -23,6 +24,24 @@ public class Teacher {
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.categoria = categoria;
+	}
+
+	public Teacher(String dni, Long id, String nombre, String apellidos, String categoria) {
+		super();
+		this.dni = dni;
+		this.id = id;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
+		this.categoria = categoria;
+
+	}
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
 	}
 
 	public Long getId() {
@@ -59,7 +78,7 @@ public class Teacher {
 
 	@Override
 	public String toString() {
-		return "Teacher [DNI=" + id + ", nombre=" + nombre + ", apellidos=" + apellidos + ", categoria=" + categoria
+		return "Teacher [DNI=" + dni + ", nombre=" + nombre + ", apellidos=" + apellidos + ", categoria=" + categoria
 				+ "]";
 	}
 
