@@ -20,6 +20,11 @@
 		<p th:text="#{notes.information}">Las notas que actualmente
 			figuran en el sistema son las siguientes:</p>
 
+		<script th:inline="javascript"> /*<![CDATA[*/
+		$( "#updateButton" ).click(function() { var numberPage = [[${param.page}]]; var urlUpdate = '/mark/list/update'; if (numberPage != null ){ urlUpdate += "?page="+numberPage[0]; } $("#tableMarks").load(urlUpdate);
+		}); /*]]>*/
+		</script>
+
 		<button type="button" id="updateButton" class="btn btn-default"
 			th:text="#{update.message}">Actualizar</button>
 		<script>
@@ -55,44 +60,12 @@
 
 									<button type="button" th:id="${'resendButton' + mark.id}"
 										class="btn btn-info">Reenviar</button>
-									<script th:inline="javascript">
-										/*<![CDATA[*/$(
-												"#resendButton[[${mark.id}]]")
-												.click(
-														function() {
-															$
-																	.get(
-																			"/mark/[[${mark.id}]]/noresend",
-																			function(
-																					data) {
-																				$(
-																						"#tableMarks")
-																						.load(
-																								'/mark/list/update');
-																			});
-														}); /*]]>*/
-									</script>
+									<script th:inline="javascript"> /*<![CDATA[*/ $( "#resendButton[[${mark.id}]]" ).click(function() { $.get( "/mark/[[${mark.id}]]/noresend", function( data ) { var numberPage = [[${param.page}]]; var urlUpdate = '/mark/list/update'; if ( numberPage != null ){ urlUpdate += "?page="+numberPage[0]; } $("#tableMarks").load(urlUpdate); }); }); /*]]>*/ </script>
 								</div>
 								<div th:unless="${mark.resend}">
 									<button type="button" th:id="${'noresendButton' + mark.id}"
 										class="btn btn-default">No reenviar</button>
-									<script th:inline="javascript">
-										/*<![CDATA[*/$(
-												"#noresendButton[[${mark.id}]]")
-												.click(
-														function() {
-															$
-																	.get(
-																			"/mark/[[${mark.id}]]/resend",
-																			function(
-																					data) {
-																				$(
-																						"#tableMarks")
-																						.load(
-																								'/mark/list/update');
-																			});
-														}); /*]]>*/
-									</script>
+									<script th:inline="javascript"> /*<![CDATA[*/ $( "#noresendButton[[${mark.id}]]" ).click(function() { $.get( "/mark/[[${mark.id}]]/resend", function( data ) { var numberPage = [[${param.page}]]; var urlUpdate = '/mark/list/update'; if ( numberPage != null ){ urlUpdate += "?page="+numberPage[0]; } $("#tableMarks").load(urlUpdate); }); }); /*]]>*/ </script>
 								</div>
 							</div></td>
 						<td><a sec:authorize="hasRole('ROLE_PROFESSOR')"
@@ -102,6 +75,7 @@
 				</tbody>
 			</table>
 		</div>
+		<footer th:replace="fragments/pagination" />
 	</div>
 
 	<footer th:replace="fragments/footer" />
