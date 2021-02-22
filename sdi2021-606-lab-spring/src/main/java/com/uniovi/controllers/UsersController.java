@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.uniovi.entities.Mark;
 import com.uniovi.entities.User;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
@@ -24,14 +25,20 @@ public class UsersController {
 
 	@Autowired
 	private SecurityService securityService;
-	
+
 	@Autowired
-	 private SignUpFormValidator signUpFormValidator;
+	private SignUpFormValidator signUpFormValidator;
 
 	@RequestMapping("/user/list")
 	public String getListado(Model model) {
 		model.addAttribute("usersList", usersService.getUsers());
 		return "user/list";
+	}
+
+	@RequestMapping("/user/list/update")
+	public String updateList(Model model) {
+		model.addAttribute("usersList", usersService.getUsers());
+		return "user/list :: tableUsers";
 	}
 
 	@RequestMapping(value = "/user/add")
@@ -67,8 +74,21 @@ public class UsersController {
 
 	@RequestMapping(value = "/user/edit/{id}", method = RequestMethod.POST)
 	public String setEdit(Model model, @PathVariable Long id, @ModelAttribute User user) {
-		user.setId(id);
-		usersService.addUser(user);
+		User original = usersService.getUser(id);
+		if (user.getDni() != null) {
+			original.setDni(user.getDni());
+		}
+		if (user.getName() != null) {
+			original.setName(user.getName());
+		}
+		if (user.getLastName() != null) {
+			original.setLastName(user.getLastName());
+		}
+		if (user.getPassword() != null) {
+			original.setPassword(user.getPassword());
+		}
+		original.setId(id);
+		usersService.addUser(original);
 		return "redirect:/user/details/" + id;
 	}
 
@@ -79,7 +99,7 @@ public class UsersController {
 //		securityService.autoLogin(user.getDni(), user.getPasswordConfirm());
 //		return "redirect:home";
 //	}
-	
+
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signup(@Validated User user, BindingResult result) {
 		signUpFormValidator.validate(user, result);
@@ -96,7 +116,6 @@ public class UsersController {
 		model.addAttribute("user", new User());
 		return "signup";
 	}
-	
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
