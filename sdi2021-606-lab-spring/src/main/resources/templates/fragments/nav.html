@@ -19,7 +19,8 @@
 					<ul class="dropdown-menu">
 						<li><a sec:authorize="hasRole('ROLE_PROFESSOR')"
 							href="/mark/add" th:text="#{add.message}">Agregar Nota</a></li>
-						<li><a href="/mark/list" th:text="#{see.message}">Ver Notas</a></li>
+						<li><a href="/mark/list" th:text="#{see.message}">Ver
+								Notas</a></li>
 					</ul>
 				<li sec:authorize="hasRole('ROLE_ADMIN')" id="users-menu"
 					class="dropdown"><a class="dropdown-toggle"
@@ -31,6 +32,16 @@
 								Usuario</a></li>
 						<li><a href="/user/list" th:text="#{seeUser.message}">Ver
 								Usuarios</a></li>
+					</ul></li>
+
+				<li id="users-menu"
+					class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#"> Gestión de profesores <span
+						class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="/teacher/list">Ver Profesores</a></li>
+						<li><a sec:authorize="hasRole('ROLE_ADMIN')" href="/teacher/add">Añadir Profesor</a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -56,6 +67,8 @@
 								th:text="#{language.fr}">Francés</span>
 						</a></li>
 					</ul></li>
+
+
 				<li sec:authorize="!isAuthenticated()"><a href="/signup"
 					th:text="#{signup.message}"> <span
 						class="glyphicon glyphicon-user"></span> Regístrate

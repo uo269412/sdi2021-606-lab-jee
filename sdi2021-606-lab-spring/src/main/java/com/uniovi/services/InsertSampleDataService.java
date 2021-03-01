@@ -1,7 +1,9 @@
 package com.uniovi.services;
 
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Mark;
+import com.uniovi.entities.Teacher;
 import com.uniovi.entities.User;
 
 @Service
@@ -18,6 +21,7 @@ public class InsertSampleDataService {
 
 	@Autowired
 	private RolesService rolesService;
+
 
 	@PostConstruct
 	public void init() {
