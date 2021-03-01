@@ -17,8 +17,7 @@ public class PO_NavView extends PO_View {
 	 * la página destino.
 	 */
 	public static void clickOption(WebDriver driver, String textOption, String criterio, String textoDestino) {
-		// CLickamos en la opción de registro y esperamos a que se cargue el enlace de
-		// Registro.
+		// CLickamos en la opción de registro y esperamos a que se cargue el enlace de Registro.
 		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "@href", textOption, getTimeout());
 		// Tiene que haber un sólo elemento.
 		assertTrue(elementos.size() == 1);
