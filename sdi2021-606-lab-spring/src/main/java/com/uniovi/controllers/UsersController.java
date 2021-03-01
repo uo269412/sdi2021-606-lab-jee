@@ -1,5 +1,7 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
 import com.uniovi.services.RolesService;
@@ -32,9 +35,21 @@ public class UsersController {
 	@Autowired
 	private RolesService rolesService;
 
+//	@RequestMapping("/user/list")
+//	public String getListado(Model model) {
+//		model.addAttribute("usersList", usersService.getUsers());
+//		return "user/list";
+//	}
+
 	@RequestMapping("/user/list")
-	public String getListado(Model model) {
-		model.addAttribute("usersList", usersService.getUsers());
+	public String getListado(Model model, Principal principal,
+			@RequestParam(value = "", required = false) String searchText) {
+		if (searchText != null && !searchText.isEmpty()) {
+			model.addAttribute("usersList", usersService.searchUsersByNameOrSurname(searchText));
+		} else {
+			model.addAttribute("usersList", usersService.getUsers());
+		}
+
 		return "user/list";
 	}
 
