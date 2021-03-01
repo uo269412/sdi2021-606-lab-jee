@@ -1,16 +1,15 @@
 package com.uniovi.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.uniovi.entities.Mark;
 import com.uniovi.entities.Teacher;
 import com.uniovi.services.TeachersService;
 import com.uniovi.validators.AddTeacherValidator;
@@ -25,8 +24,9 @@ public class TeachersController {
 	private AddTeacherValidator teacherValidator;
 
 	@RequestMapping("/teacher/list")
-	public String getList(Model model) {
-		model.addAttribute("teachersList", teachersService.getTeachers());
+	public String getList(Pageable pageable, Model model) {
+		model.addAttribute("teachersList", teachersService.getTeachers(pageable));
+		model.addAttribute("page", teachersService.getTeachers(pageable));
 		return "teacher/list";
 	}
 

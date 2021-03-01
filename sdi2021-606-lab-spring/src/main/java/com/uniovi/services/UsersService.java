@@ -1,8 +1,6 @@
 package com.uniovi.services;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,7 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.uniovi.entities.Mark;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.UsersRepository;
 
@@ -28,10 +25,9 @@ public class UsersService {
 //	public void init() {
 //	}
 
-	public List<User> getUsers() {
-		List<User> users = new ArrayList<User>();
-		usersRepository.findAll().forEach(users::add);
-		return users;
+	public Page<User> getUsers(Pageable pageable) {
+		Page<User> usersFinal = usersRepository.findAll(pageable);
+		return usersFinal;
 	}
 
 	public User getUser(Long id) {
@@ -51,10 +47,10 @@ public class UsersService {
 		usersRepository.deleteById(id);
 	}
 
-	public List<User> searchUsersByNameOrSurname(String searchtext) {
-		List<User> users = new ArrayList<User>();
+	public Page<User> searchUsersByNameOrSurname(Pageable pageable, String searchtext) {
+		Page<User> users = new PageImpl<User>(new LinkedList<User>());
 		searchtext = "%" + searchtext + "%";
-		users = usersRepository.searchByNameOrSurname(searchtext);
+		users = usersRepository.searchByNameOrSurname(pageable, searchtext);
 		return users;
 	}
 }

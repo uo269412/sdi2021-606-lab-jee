@@ -6,9 +6,9 @@ import java.util.LinkedList;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -140,8 +140,8 @@ public class MarksController {
 	}
 
 	@RequestMapping(value = "/mark/add")
-	public String getMark(Model model) {
-		model.addAttribute("usersList", usersService.getUsers());
+	public String getMark(Pageable pageable, Model model) {
+		model.addAttribute("usersList", usersService.getUsers(pageable));
 		return "mark/add";
 	}
 
@@ -195,9 +195,9 @@ public class MarksController {
 //	}
 
 	@RequestMapping(value = "/mark/edit/{id}")
-	public String getEdit(Model model, @PathVariable Long id) {
+	public String getEdit(Pageable pageable, Model model, @PathVariable Long id) {
 		model.addAttribute("mark", marksService.getMark(id));
-		model.addAttribute("usersList", usersService.getUsers());
+		model.addAttribute("usersList", usersService.getUsers(pageable));
 		return "mark/edit";
 	}
 

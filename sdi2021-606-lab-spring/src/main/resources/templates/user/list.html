@@ -39,7 +39,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="user : ${usersList}">
+					<tr th:each="user : ${usersList}">123456
 						<td th:text="${user.dni}">71888888X</td>
 						<td th:text="${user.name}">Nombre del alumno</td>
 						<td th:text="${user.lastName}">Apellidos del alumno</td>
@@ -50,7 +50,9 @@
 				</tbody>
 			</table>
 		</div>
+		<footer th:replace="fragments/pagination" />
 	</div>
+
 	<footer th:replace="fragments/footer" />
 </body>
 </html>

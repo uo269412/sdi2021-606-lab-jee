@@ -1,9 +1,12 @@
 package com.uniovi.services;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Teacher;
@@ -17,10 +20,15 @@ public class TeachersService {
 
 	// private List<Teacher> teachersList = new LinkedList<Teacher>();
 
-	public List<Teacher> getTeachers() {
-		List<Teacher> teachers = new ArrayList<Teacher>();
-		teachersRepository.findAll().forEach(teachers::add);
-		return teachers;
+//	public List<Teacher> getTeachers() {
+//		List<Teacher> teachers = new ArrayList<Teacher>();
+//		teachersRepository.findAll().forEach(teachers::add);
+//		return teachers;
+//	}
+	
+	public Page<Teacher> getTeachers(Pageable pageable) {
+		Page<Teacher> finalTeachers = teachersRepository.findAll(pageable);
+		return finalTeachers;
 	}
 
 	public Teacher getTeacher(Long id) {
