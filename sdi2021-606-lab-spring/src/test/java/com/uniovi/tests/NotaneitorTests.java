@@ -113,6 +113,23 @@ public class NotaneitorTests {
 		// COmprobamos el error de Nombre corto .
 		PO_RegisterView.checkKey(driver, "Error.signup.name.length", PO_Properties.getSPANISH());
 		// Rellenamos el formulario.
+		PO_RegisterView.fillForm(driver, "9999B", "Josefo", "Perez", "77777", "77777");
+		// COmprobamos el error de longitud del DNI .
+		PO_RegisterView.checkKey(driver, "Error.signup.dni.length", PO_Properties.getSPANISH());
+		// Rellenamos el formulario.
 		PO_RegisterView.fillForm(driver, "99999990B", "Josefo", "Per", "77777", "77777");
+		// COmprobamos el error de apellido corto .
+		PO_RegisterView.checkKey(driver, "Error.signup.lastName.length", PO_Properties.getSPANISH());
+		// Rellenamos el formulario.
+		PO_RegisterView.fillForm(driver, "99999990B", "Josefo", "Perez", "7", "7");
+		// COmprobamos el error de longitud de contraseña .
+		PO_RegisterView.checkKey(driver, "Error.signup.password.length", PO_Properties.getSPANISH());
+		// Rellenamos el formulario.
+		PO_RegisterView.fillForm(driver, "99999990B", "Josefo", "Perez", "77777", "88888");
+		// COmprobamos el error de que no coincidan las contraseñas .
+		PO_RegisterView.checkKey(driver, "Error.signup.passwordConfirm.coincidence", PO_Properties.getSPANISH());
+		// Rellenamos el formulario.
+		PO_RegisterView.fillForm(driver, "99999990B", "Josefo", "Perez", "77777", "77777");
+
 	}
 }
