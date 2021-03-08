@@ -71,7 +71,7 @@ public class NotaneitorComplementarioTests {
 	// PR01. Añadiendo profesores con datos válidos.
 	@Test
 	public void PR01() {
-		PO_PrivateView.defaultLogin(driver, "99999993D", "123456", "Notas del usuario");
+		PO_PrivateView.defaultLogin(driver, "99999988F", "123456", "Notas del usuario");
 		PO_View.checkElement(driver, "btn", "//a[contains(@href, 'teacher/add')]");
 		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'teacher/add')]"); 
 		elementos.get(0).click(); 
@@ -82,57 +82,30 @@ public class NotaneitorComplementarioTests {
 		
 	}
 
-	// PR02. Registro de profesores con datos inválidos (nombre y categoría inválidos)
+	// PR02. Añadiendo profesores con datos inválidos (nombre y categoría inválidos)
 	@Test
 	public void PR02() {
-		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-
-		// Rellenamos el formulario.
-		PO_RegisterView.fillForm(driver, "99999990A", "Josefo", "Perez", "77777", "77777");
-		PO_View.getP();
-		// COmprobamos el error de DNI repetido.
-		PO_RegisterView.checkKey(driver, "Error.signup.dni.duplicate", PO_Properties.getSPANISH());
-
-		// Rellenamos el formulario.
-		PO_RegisterView.fillForm(driver, "99999990B", "Jose", "Perez", "77777", "77777");
-		PO_View.getP();
-		// COmprobamos el error de Nombre corto .
-		PO_RegisterView.checkKey(driver, "Error.signup.name.length", PO_Properties.getSPANISH());
-
-		// Rellenamos el formulario.
-		PO_RegisterView.fillForm(driver, "9", "Josefo", "Perez", "77777", "77777");
-		PO_View.getP();
-		// COmprobamos el error de longitud del DNI .
-		PO_RegisterView.checkKey(driver, "Error.signup.dni.length", PO_Properties.getSPANISH());
-
-		// Rellenamos el formulario.
-		PO_RegisterView.fillForm(driver, "99999990B", "Josefo", "Per", "77777", "77777");
-		PO_View.getP();
-		// COmprobamos el error de apellido corto .
-		PO_RegisterView.checkKey(driver, "Error.signup.lastName.length", PO_Properties.getSPANISH());
-
-		// Rellenamos el formulario.
-		PO_RegisterView.fillForm(driver, "99999990B", "Josefo", "Perez", "7", "7");
-		PO_View.getP();
-		// COmprobamos el error de longitud de contraseña .
-		PO_RegisterView.checkKey(driver, "Error.signup.password.length", PO_Properties.getSPANISH());
-
-		// Rellenamos el formulario.
-		PO_RegisterView.fillForm(driver, "99999990B", "Josefo", "Perez", "77777", "88888");
-		PO_View.getP();
-		// COmprobamos el error de que no coincidan las contraseñas .
-		PO_RegisterView.checkKey(driver, "Error.signup.passwordConfirm.coincidence", PO_Properties.getSPANISH());
-
-		// Rellenamos el formulario.
-		PO_RegisterView.fillForm(driver, "99999990B", "Josefo", "Perez", "77777", "77777");
+		PO_PrivateView.defaultLogin(driver, "99999988F", "123456", "Notas del usuario");
+		PO_View.checkElement(driver, "btn", "//a[contains(@href, 'teacher/add')]");
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'teacher/add')]"); 
+		elementos.get(0).click(); 
+		PO_RegisterTeacherView.fillFormAddTeacher(driver, 3, "Pedro", "Suarez", "Ingles", "23523523w4532454sfsf"); 
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'page-link')]"); 
+		PO_RegisterTeacherView.checkKey(driver, "Error.teacher.dniFormat", PO_Properties.getSPANISH());
 	}
 
 	// P303. Verificar que solo los usuarios autorizados pueden dar de alta un profesor
 	@Test
 	public void PR03() {
-		PO_PrivateView.defaultLogin(driver, "99999993D", "123456", "99999993D");
-		PO_PrivateView.checkMenuMarks(driver, "add", 3, "Nota Nueva 1", "8");
+		PO_PrivateView.defaultLogin(driver, "99999993D", "123456", "Notas del usuario");
+		PO_View.checkElement(driver, "btn", "//a[contains(@href, 'teacher/add')]");
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'teacher/add')]"); 
+		elementos.get(0).click(); 
+		//Error no es admin, no puede acceder
+		PO_PrivateView.defaultLogin(driver, "99999988F", "123456", "Notas del usuario");
+		PO_View.checkElement(driver, "btn", "//a[contains(@href, 'teacher/add')]");
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'teacher/add')]"); 
+		elementos.get(0).click(); 
 	}
 
 
