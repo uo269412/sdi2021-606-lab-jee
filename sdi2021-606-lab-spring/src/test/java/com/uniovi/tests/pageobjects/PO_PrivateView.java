@@ -36,30 +36,50 @@ public class PO_PrivateView extends PO_NavView {
 		PO_View.checkElement(driver, "text", expectedTextField);
 	}
 
-	public static void checkMenuMarks(WebDriver driver, String command, int userOrder, String description,
-			String score) {
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'marks-menu')]/a");
-		elementos.get(0).click();
-		if (command.contains("add")) {
-			elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'mark/add')]");
-			elementos.get(0).click();
-			PO_PrivateView.fillFormAddMark(driver, userOrder, description, score);
-			elementos = PO_View.checkElement(driver, "text", "Nota Nueva 1");
-			elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'page-link')]");
-			elementos.get(3).click();
-		}  else if (command.contains("delete")) {
-			elementos.get(0).click(); 
-			elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'mark/list')]"); 
-			elementos.get(0).click(); 
-			elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'page-link')]"); 
-			elementos.get(3).click(); 
-			elementos = PO_View.checkElement(driver, "free", "//td[contains(text(), 'Nota Nueva 1')]/following-sibling::*/a[contains(@href, 'mark/delete')]");
-			elementos.get(0).click(); 
-			elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'page-link')]");
-			elementos.get(3).click(); 
-			SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "Nota Nueva 1",PO_View.getTimeout() ); 
-		}		
-		PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
-
-	}
+	public static void checkMenuMarks(WebDriver driver,String command,int userOrder, String description,
+            String score) {
+        // Pinchamos en la opción de menu de Notas: //li[contains(@id, 'marks-menu')]/a
+        List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id,'marks-menu')]/a");
+        elementos.get(0).click();
+        if (command.equals("add")) {
+            // Esperamos a aparezca la opción de añadir nota: //a[contains(@href,
+            // 'mark/add')]
+            elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'mark/add')]");
+           
+            // Pinchamos en agregar Nota.
+            elementos.get(0).click();
+           
+            // Ahora vamos a rellenar la nota. //option[contains(@value, '4')]
+            PO_PrivateView.fillFormAddMark(driver, userOrder, description, score);
+           
+           
+            // Ahora nos desconectamos
+        } else if (command.equals("delete")) {
+            // Pinchamos en la opción de lista de notas.
+            elementos = PO_View.checkElement(driver, "free", "//a[contains(@href,'mark/list')]");
+            elementos.get(0).click();
+           
+        }
+       
+        // Esperamos a que se muestren los enlaces de paginación la lista de notas
+        elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'page-link')]");
+        // Nos vamos a la última página
+        elementos.get(3).click();
+       
+        if (command.equals("delete")){
+            elementos = PO_View.checkElement(driver, "free",
+                    "//td[contains(text(), 'Nota Nueva 1')]/following-sibling::*/a[contains(@href, 'mark/delete')]");
+            elementos.get(0).click();
+            // Y esperamos a que NO aparezca la ultima "Nueva Nota 1"
+            SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "Nota Nueva 1", PO_View.getTimeout());
+            // Y esperamos a que NO aparezca la ultima "Nueva Nota 1"
+            SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "Nota Nueva 1", PO_View.getTimeout());
+        } else if (command.equals("add")) {
+            // Comprobamos que aparece la nota en la pagina
+            elementos = PO_View.checkElement(driver, "text", "Nota Nueva 1");
+        }
+       
+        PO_PrivateView.clickOption(driver, "logout", "text", "Identifícate");
+       
+    }
 }
