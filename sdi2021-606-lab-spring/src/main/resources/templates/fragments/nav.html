@@ -11,7 +11,9 @@
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
+			
 				<li><a href="/home">Home</a></li>
+				
 				<li id="marks-menu" class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#" th:text="#{manageMarks.message}">
 						Gestión de Notas <span class="caret"></span>
@@ -22,6 +24,8 @@
 						<li><a href="/mark/list" th:text="#{see.message}">Ver
 								Notas</a></li>
 					</ul>
+				</li>
+				
 				<li sec:authorize="hasRole('ROLE_ADMIN')" id="users-menu"
 					class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#" th:text="#{manageUsers.message}">
@@ -34,15 +38,16 @@
 								Usuarios</a></li>
 					</ul></li>
 
-				<li id="users-menu"
+				<li id="teachers-menu"
 					class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#"> Gestión de profesores <span
-						class="caret"></span>
+					data-toggle="dropdown" href="#" th:text="#{manageUsers.message}">
+						Gestión de Profesores <span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
 						<li><a href="/teacher/list">Ver Profesores</a></li>
 						<li><a sec:authorize="hasRole('ROLE_ADMIN')" href="/teacher/add">Añadir Profesor</a></li>
 					</ul></li>
+
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown"><a id="btnLanguage" href=" #"

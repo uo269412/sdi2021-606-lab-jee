@@ -10,11 +10,7 @@ import com.uniovi.tests.util.SeleniumUtils;
 
 public class PO_RegisterTeacherView extends PO_NavView {
 	static public void fillFormAddTeacher(WebDriver driver, int userOrder, String nombrep, String apellidosp, String categoriap, String dnip) {
-		// Esperamos 5 segundo a que carge el DOM porque en algunos equipos falla
 		SeleniumUtils.esperarSegundos(driver, 5);
-		// Seleccionamos el alumnos userOrder
-		new Select(driver.findElement(By.id("user"))).selectByIndex(userOrder);
-		// Rellenemos el campo de descripción
 		WebElement dni = driver.findElement(By.name("dni"));
 		dni.clear();
 		dni.sendKeys(dnip);

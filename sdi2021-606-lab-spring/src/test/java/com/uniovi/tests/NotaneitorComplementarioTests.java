@@ -56,10 +56,6 @@ public class NotaneitorComplementarioTests {
 		driver.quit();
 	}
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
 
 	public static WebDriver getDriver(String PathFirefox, String Geckdriver) {
 		System.setProperty("webdriver.firefox.bin", PathFirefox);
@@ -72,12 +68,13 @@ public class NotaneitorComplementarioTests {
 	@Test
 	public void PR01() {
 		PO_PrivateView.defaultLogin(driver, "99999988F", "123456", "Notas del usuario");
-		PO_View.checkElement(driver, "btn", "//a[contains(@href, 'teacher/add')]");
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'teacher/add')]"); 
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'teachers-menu')]/a");
+		elementos.get(0).click(); 
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'teacher/add')]");
 		elementos.get(0).click(); 
 		PO_RegisterTeacherView.fillFormAddTeacher(driver, 3, "Pedro", "Suarez", "Ingles", "53429543F"); 
 		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'page-link')]"); 
-		elementos.get(3).click(); 
+		elementos.get(0).click(); 
 		elementos = PO_View.checkElement(driver, "text", "Pedro");
 		
 	}
@@ -86,11 +83,11 @@ public class NotaneitorComplementarioTests {
 	@Test
 	public void PR02() {
 		PO_PrivateView.defaultLogin(driver, "99999988F", "123456", "Notas del usuario");
-		PO_View.checkElement(driver, "btn", "//a[contains(@href, 'teacher/add')]");
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'teacher/add')]"); 
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'teachers-menu')]/a");
+		elementos.get(0).click(); 
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'teacher/add')]");
 		elementos.get(0).click(); 
 		PO_RegisterTeacherView.fillFormAddTeacher(driver, 3, "Pedro", "Suarez", "Ingles", "23523523w4532454sfsf"); 
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@class, 'page-link')]"); 
 		PO_RegisterTeacherView.checkKey(driver, "Error.teacher.dniFormat", PO_Properties.getSPANISH());
 	}
 
@@ -98,14 +95,8 @@ public class NotaneitorComplementarioTests {
 	@Test
 	public void PR03() {
 		PO_PrivateView.defaultLogin(driver, "99999993D", "123456", "Notas del usuario");
-		PO_View.checkElement(driver, "btn", "//a[contains(@href, 'teacher/add')]");
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'teacher/add')]"); 
-		elementos.get(0).click(); 
-		//Error no es admin, no puede acceder
-		PO_PrivateView.defaultLogin(driver, "99999988F", "123456", "Notas del usuario");
-		PO_View.checkElement(driver, "btn", "//a[contains(@href, 'teacher/add')]");
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'teacher/add')]"); 
-		elementos.get(0).click(); 
+		SeleniumUtils.textoNoPresentePagina(driver, "professor-menu");
+		SeleniumUtils.textoNoPresentePagina(driver, "professor/add");
 	}
 
 
